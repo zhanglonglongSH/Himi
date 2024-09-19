@@ -136,7 +136,6 @@ generate_key() {
     cat "$OUTPUT_FILE"
 
     echo "按任意键返回主菜单栏..."
-    read -n 1 -s
 }
 
 # 运行节点函数
@@ -171,7 +170,6 @@ run_node() {
     pm2 save
 
     echo "按任意键返回主菜单栏..."
-    read -n 1 -s
 }
 
 # 升级版本函数
@@ -226,7 +224,6 @@ upgrade_version() {
 
     echo "版本升级完成！"
     echo "按任意键返回主菜单栏..."
-    read -n 1 -s
 }
 
 # 备份 address.json 函数
@@ -243,7 +240,6 @@ backup_address_json() {
     fi
 
     echo "按任意键返回主菜单栏..."
-    read -n 1 -s
 }
 
 # 查看日志函数
@@ -257,6 +253,5 @@ view_logs() {
     pm2 logs popmd
 
     echo "按任意键返回主菜单栏..."
-    read -n 1 -s
 }
 
