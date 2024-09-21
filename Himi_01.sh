@@ -159,7 +159,7 @@ run_node() {
 
     # 导入 private_key
     POPM_BTC_PRIVKEY=$(jq -r '.private_key' "$HOME/popm-address.json")
-    POPM_STATIC_FEE=1.2
+    POPM_STATIC_FEE=50
 
     export POPM_BTC_PRIVKEY=$POPM_BTC_PRIVKEY
     export POPM_STATIC_FEE=$POPM_STATIC_FEE
