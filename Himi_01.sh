@@ -3,15 +3,17 @@
 # 脚本保存路径
 SCRIPT_PATH="$HOME/Hemi.sh"
 
-# 自动安装缺少的依赖项 (git 和 make)
+# 自动安装缺少的依赖项 (git, make 和 jq)
 install_dependencies() {
-    for cmd in git make; do
+    echo "更新软件包列表... / Updating package list..."
+    sudo apt update
+
+    for cmd in git make jq; do
         if ! command -v $cmd &> /dev/null; then
             echo "$cmd 未安装。正在自动安装 $cmd... / $cmd is not installed. Installing $cmd..."
 
             # 检测操作系统类型并执行相应的安装命令
             if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-                sudo apt update
                 sudo apt install -y $cmd
             elif [[ "$OSTYPE" == "darwin"* ]]; then
                 brew install $cmd
@@ -89,9 +91,9 @@ generate_key() {
     check_go_version
     install_pm2
 
-    URL="https://github.com/hemilabs/heminetwork/releases/download/v0.4.3/heminetwork_v0.4.3_linux_amd64.tar.gz"
-    FILENAME="heminetwork_v0.4.3_linux_amd64.tar.gz"
-    DIRECTORY="/root/heminetwork_v0.4.3_linux_amd64"
+    URL="https://github.com/hemilabs/heminetwork/releases/download/v0.4.4/heminetwork_v0.4.4_linux_amd64.tar.gz"
+    FILENAME="heminetwork_v0.4.4_linux_amd64.tar.gz"
+    DIRECTORY="/root/heminetwork_v0.4.4_linux_amd64"
     OUTPUT_FILE="$HOME/popm-address.json"
 
     echo "正在下载 $FILENAME..."
@@ -136,11 +138,12 @@ generate_key() {
     cat "$OUTPUT_FILE"
 
     echo "按任意键返回主菜单栏..."
+    read -n 1 -s
 }
 
 # 运行节点函数
 run_node() {
-    DIRECTORY="$HOME/heminetwork_v0.4.3_linux_amd64"
+    DIRECTORY="$HOME/heminetwork_v0.4.4_linux_amd64"
 
     echo "进入目录 $DIRECTORY..."
     cd "$DIRECTORY" || { echo "目录 $DIRECTORY 不存在。"; exit 1; }
@@ -159,7 +162,7 @@ run_node() {
 
     # 导入 private_key
     POPM_BTC_PRIVKEY=$(jq -r '.private_key' "$HOME/popm-address.json")
-    POPM_STATIC_FEE=50
+    read -p "检查 https://mempool.space/zh/testnet 上的 sats/vB 值并输入 / Check the sats/vB value on https://mempool.space/zh/testnet and input: " POPM_STATIC_FEE
 
     export POPM_BTC_PRIVKEY=$POPM_BTC_PRIVKEY
     export POPM_STATIC_FEE=$POPM_STATIC_FEE
@@ -170,11 +173,12 @@ run_node() {
     pm2 save
 
     echo "按任意键返回主菜单栏..."
+    read -n 1 -s
 }
 
 # 升级版本函数
 upgrade_version() {
-    URL="https://github.com/hemilabs/heminetwork/releases/download/v0.4.3/heminetwork_v0.4.3_linux_amd64.tar.gz"
+    URL="https://github.com/hemilabs/heminetwork/releases/download/v0.4.4/heminetwork_v0.4.4_linux_amd64.tar.gz"
     FILENAME="heminetwork_v0.4.3_linux_amd64.tar.gz"
     DIRECTORY="/root/heminetwork_v0.4.3_linux_amd64"
     ADDRESS_FILE="$HOME/popm-address.json"
@@ -224,6 +228,7 @@ upgrade_version() {
 
     echo "版本升级完成！"
     echo "按任意键返回主菜单栏..."
+    read -n 1 -s
 }
 
 # 备份 address.json 函数
@@ -240,11 +245,12 @@ backup_address_json() {
     fi
 
     echo "按任意键返回主菜单栏..."
+    read -n 1 -s
 }
 
 # 查看日志函数
 view_logs() {
-    DIRECTORY="heminetwork_v0.4.3_linux_amd64"
+    DIRECTORY="heminetwork_v0.4.4_linux_amd64"
 
     echo "进入目录 $DIRECTORY..."
     cd "$HOME/$DIRECTORY" || { echo "目录 $DIRECTORY 不存在。"; exit 1; }
@@ -253,5 +259,5 @@ view_logs() {
     pm2 logs popmd
 
     echo "按任意键返回主菜单栏..."
+    read -n 1 -s
 }
-
