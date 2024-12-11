@@ -176,9 +176,9 @@ run_node() {
 
 # 升级版本函数
 upgrade_version() {
-    URL="https://github.com/hemilabs/heminetwork/releases/download/v0.4.4/heminetwork_v0.4.4_linux_amd64.tar.gz"
-    FILENAME="heminetwork_v0.4.3_linux_amd64.tar.gz"
-    DIRECTORY="/root/heminetwork_v0.4.3_linux_amd64"
+    URL="https://github.com/hemilabs/heminetwork/releases/download/v0.8.0/heminetwork_v0.8.0_linux_arm64.tar.gz"
+    FILENAME="heminetwork_v0.8.0_linux_amd64.tar.gz"
+    DIRECTORY="/root/heminetwork_v0.5.0_linux_amd64"
     ADDRESS_FILE="$HOME/popm-address.json"
     BACKUP_FILE="$HOME/popm-address.json.bak"
 
